@@ -8,7 +8,7 @@ services:
     region: oregon
     plan: free
     repo: https://github.com/Constraint-coder/apiNavigator
-    rootDir: . # Cambia a "api" si tu Laravel está dentro de /api
+    rootDir: .  # Laravel está en la raíz
 
     buildCommand: |
       composer install --no-dev --optimize-autoloader
