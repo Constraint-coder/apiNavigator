@@ -1,16 +1,36 @@
+# Exported from Render on 2025-11-12T21:21:18Z
+version: "1"
 services:
-  - type: web
-    name: api-laravel
-    env: php
-    region: oregon
-    buildCommand: |
-      composer install
-      php artisan migrate --force
-    startCommand: php artisan serve --host 0.0.0.0 --port 10000
-envVars:
-  - key: APP_KEY
-    value: (tu app key)
-  - key: DB_HOST
-    fromDatabase:
-      name: tu-base-de-datos
+- type: web
+  name: apiNavigator
+  runtime: node
+  repo: https://github.com/Constraint-coder/apiNavigator
+  plan: free
+  envVars:
+  - key: DB_PASSWORD
+    sync: false
+  - key: DB_USERNAME
+    sync: false
+  - key: DB_DATABASE
+    fromService:
+      name: apiNavigator
+      type: web
       property: host
+  - key: DB_PORT
+    sync: false
+  - key: DB_HOST
+    sync: false
+  - key: DB_CONNECTION
+    sync: false
+  - key: APP_URL
+    sync: false
+  - key: APP_KEY
+    sync: false
+  - key: APP_DEBUG
+    sync: false
+  - key: APP_ENV
+    sync: false
+  region: oregon
+  buildCommand: composer install && php artisan migrate --force
+  startCommand: php artisan serve --host 0.0.0.0 --port 10000
+  autoDeployTrigger: commit
