@@ -1,36 +1,40 @@
-# Exported from Render on 2025-11-12T21:21:18Z
+# Configuración para desplegar Laravel en Render
 version: "1"
+
 services:
-- type: web
-  name: apiNavigator
-  runtime: node
-  repo: https://github.com/Constraint-coder/apiNavigator
-  plan: free
-  envVars:
-  - key: DB_PASSWORD
-    sync: false
-  - key: DB_USERNAME
-    sync: false
-  - key: DB_DATABASE
-    fromService:
-      name: apiNavigator
-      type: web
-      property: host
-  - key: DB_PORT
-    sync: false
-  - key: DB_HOST
-    sync: false
-  - key: DB_CONNECTION
-    sync: false
-  - key: APP_URL
-    sync: false
-  - key: APP_KEY
-    sync: false
-  - key: APP_DEBUG
-    sync: false
-  - key: APP_ENV
-    sync: false
-  region: oregon
-  buildCommand: composer install && php artisan migrate --force
-  startCommand: php artisan serve --host 0.0.0.0 --port 10000
-  autoDeployTrigger: commit
+  - type: web
+    name: apiNavigator
+    env: php
+    region: oregon
+    plan: free
+    repo: https://github.com/Constraint-coder/apiNavigator
+    rootDir: . # Cambia a "api" si tu Laravel está dentro de /api
+
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan key:generate --force
+      php artisan migrate --force
+
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
