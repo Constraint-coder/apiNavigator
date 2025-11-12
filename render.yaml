@@ -5,7 +5,7 @@ services:
   - type: web
     name: apiNavigator
     env: php
-    runtime: node
+    runtime: php
     region: oregon
     plan: free
     repo: https://github.com/Constraint-coder/apiNavigator
