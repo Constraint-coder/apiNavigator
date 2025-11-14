@@ -42,9 +42,9 @@ class PuntoDestinoController extends Controller
 
         $validated = $request->validate([
             'nombres' => 'required|string|max:255',
-            'coordenadas' => 'required|array',
-            'coordenadas.x' => 'required|numeric',
-            'coordenadas.y' => 'required|numeric',
+    'coordenadas' => 'required|array|size:2', 
+    'coordenadas.0' => 'numeric',             
+    'coordenadas.1' => 'numeric', 
             'id_pisos' => 'required|exists:pisos,id',
         ]);
 

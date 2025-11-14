@@ -44,9 +44,10 @@ public function store(Request $request)
     $validated = $request->validate([
         'nombres' => 'required|string|max:255',
         'id_pisos' => 'required|exists:pisos,id',
-        'coordenadas' => 'required|array|min:1',
-        'coordenadas.*.x' => 'required|numeric',
-        'coordenadas.*.y' => 'required|numeric',
+    'coordenadas' => 'required|array|min:1',
+    'coordenadas.*' => 'array|size:2',
+    'coordenadas.*.0' => 'numeric',
+    'coordenadas.*.1' => 'numeric',
     ]);
 
     $pasillo->update($validated);
